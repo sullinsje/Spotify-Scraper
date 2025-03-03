@@ -1,6 +1,7 @@
 # Spotify-Scraper
 Utilizes the Spotify Web API to grab data from spotify objects, using this data to create objects to perform functions with.
 
+
 # Project status prior to upload
 
 ### API Keys
@@ -24,3 +25,6 @@ Described in the planning were three major functions for this project:
     - This function adds the passed in item to a database.
     - At time of upload, the database to update's path is hard-coded in, and the database has to be named "playlist.db" and be inside of the app's directory. May be changed later
     - The passed in item can be a track, playlist, or album. The database holds songs with their name, spotify ID, year, track number, etc., and playlists and albums will be treated as collections and every song in them will be added individually.
+
+
+## Issues
