@@ -7,14 +7,15 @@ from sqlalchemy import create_engine, exists
 from sqlalchemy.orm import sessionmaker
 
 #region: token stuff + database stuff
-CLIENT_ID = "3f1512040b454078aaf482feaad07417"
-CLIENT_SECRET = "962356d8ae7340eb819d8a4c83504f37"
+load_dotenv()
+client_id = os.getenv('CLIENT_ID')
+client_secret = os.getenv('CLIENT_SECRET')
 
 AUTH_URL = "https://accounts.spotify.com/api/token"
 auth_response = requests.post(AUTH_URL, {
     'grant_type': 'client_credentials',
-    'client_id': CLIENT_ID,
-    'client_secret': CLIENT_SECRET,
+    'client_id': client_id,
+    'client_secret': client_secret,
 })
 
 auth_response_data = auth_response.json()
