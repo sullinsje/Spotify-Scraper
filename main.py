@@ -36,6 +36,7 @@ session = Session()
 
 #endregion
 
+# test
 def get_artist(artist_name):
     BASE_URL = 'https://api.spotify.com/v1/artists/'
 
