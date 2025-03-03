@@ -3,17 +3,17 @@ Utilizes the Spotify Web API to grab data from spotify objects, using this data 
 
 # Project status prior to upload
 
-#### API Keys
+### API Keys
 The first part of the project outside of deciding I wanted to mess with the Spotify API was to see what I could do with it. Eager to get started, I quickly performed a search on the API authorization workflow for the Spotify API and found a simple workflow that works well for me here: https://stackoverflow.com/q/64461018
 
 The authorization response is formed with the client credentials of the app that must be created in the Spotify dev dashboard. We then get the response as JSON to form our access token which is required for our GET requests. Every request has the header: `'Authorization': 'Bearer {token}'.format(token=access_token)`
 
-#### Creating Search and Get Functions
+### Creating Search and Get Functions
 Next was to start messing with the GET requests one can make with the Spotify API. I started with Get Artist; Spotify documentation and code examples in class helped make this incredibly simple. I just made the GET request with the cooresponding endpoint and received the desired JSON. The hard part was parsing this JSON into my desired form. I decided since all the GET requests were similar, I would make a search function. This would use the Search endpoint and two parameters: the search term and the type (artist, album, track). I would then parse the JSON from the GET request inside of my Search function to retrieve the item's URI/ID and then return what was retrieved. Then the returned item could be used inside all GET functions. 
 #### Parsing JSON to Pydantic Classes
 For ease of getting specific attributes of the JSON received from the GET requests, I created classes for each type of response. I naively began with just artist, track, and album classes without reading too much into the documentation. The classes each had attributes for the desired JSON fields. The first issue I ran into was that albums and tracks returned lists of simplified versions of the other classes, so separate classes needed to be created. Next came issues with attributes themselves; I did not realize that the attributes needed to be named EXACTLY like the fields in the JSON output. With both of these problems solved, I could now create objects with the JSON retrieved from the GET functions, and the functions would return the created object. 
 
-#### Other Functions
+### Other Functions
 Described in the planning were three major functions for this project:
 - Create Playlist
     - A class was created inside of models.py for a playlist. It has a name and playlist attribute. A function inside of it allows singular tracks to be added (album and simple track functionaliy has not been added)
