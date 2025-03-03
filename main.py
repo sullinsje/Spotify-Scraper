@@ -36,6 +36,7 @@ session = Session()
 
 #endregion
 
+#region: gets & search
 def get_artist(artist_name):
     BASE_URL = 'https://api.spotify.com/v1/artists/'
 
@@ -114,6 +115,8 @@ def search(term, type):
         return uri
     else:
         return -1
+
+#endregion
 
 def create_playlist(name):
     playlist = Playlist(name=name)
@@ -199,124 +202,67 @@ def item_to_db(item):
     else:
         print("Cannot add this item...")
 
-def print_tests():
-    weezer = get_artist("Jawbreaker")
-    print(weezer.__repr__())
-
-    song = get_track("Radio Christie Front Drive")
-    print(song.__repr__())
-
-    album = get_album("Agony & Irony")
-    print(album.__repr__())
-
-    print(niche_calculator(weezer))
-    print(niche_calculator(song))
-    print(niche_calculator(album))
-    print(niche_calculator(12))
-
-def playlist_tests(song1, song2, song3, playlist_name):
-    playlist = Playlist(playlist_name)
-
-    song = get_track(song1)
-    playlist.Add(song)
-
-    song = get_track(song2)
-    playlist.Add(song)
-
-    song = get_track(song3)
-    playlist.Add(song)
-
-    print(playlist.__repr__())
-
-def db_tests(song_title, album_title, song_title2):
-    song = get_track(song_title)
-    item_to_db(song)
-    album = get_album(album_title)
-    item_to_db(album)
-    playlist = Playlist("p")
-    playlist.Add(get_track(song_title2))
-    item_to_db(playlist)
-
-#db_tests("Dumpweed", "blink-182", "Touchdown Boy")
-#print_tests()
-def testrun():
+def view_item():
+    search_types = ['artist', 'track', 'album']
     while True:
         os.system("cls")
-        print("We're going to add songs to a database from Spotify.")
-        x = input("Create an album, track, or playlist? (Q to quit)\n")
-        if x.upper() == "ALBUM":
-            os.system("cls")
-            a = input("What item would you like to create? (Including artist helps filter search!) ")
-            try:
-                album = get_album(a)
-                while True:
+        type = input("What would you like to search for? (album, track, artist) (press 'q' to quit)\n").lower()
+        if type in search_types:
+            match type:
+                case 'artist':
                     os.system("cls")
-                    c = input("Add item to database? (Y/N) ")
-                    if c.upper() == 'Y':
-                        item_to_db(album)
-                        input()
-                        break
-                    elif c.upper() == 'N':
-                        break
-                    else:
-                        print("invalid option...")
-            except:
-                print("An error occurred...")
-
-        elif x.upper() == "TRACK":
-            os.system("cls")
-            t = input("What item would you like to create? (Including artist helps filter search!) ")
-            try:
-                track = get_track(t)
-                while True:
+                    artist_name = input("What artist would you like to search for?\n")
+                    artist = get_artist(artist_name)
                     os.system("cls")
-                    c = input("Add item to database? (Y/N) ")
-                    if c.upper() == 'Y':
-                        item_to_db(track)
-                        input()
-                        break
-                    elif c.upper() == 'N':
-                        break
-                    else:
-                        print("invalid option...")
-            except:
-                print("An error occurred...")
-
-        elif x.upper() == "PLAYLIST":
-            os.system("cls")
-            print("Let's create a playlist!")
-            name = input("Playlist name: ")
-            playlist = Playlist(name)
-
-            while True:
-                os.system("cls")
-                t = input("Create a track to add (including artist filters results): ")
-                try:
-                    track = get_track(t)
-                    playlist.Add(track)
-                    c = input("Press enter to add another or Q to quit... ")
-                    if c.upper() == "Q":
-                        break
-                except:
-                    input("An error occurred...")
-
-            try:
-                while True:
+                    print(artist.__repr__())
+                    v = verify_search()
+                    if v == "N":
+                        print("Sorry the info was not what you desired. Try adding more terms to narrow down the search!")
+                    print("Press enter to continue...")
+                    input()
+                
+                case 'track':
                     os.system("cls")
-                    c = input("Add item to database? (Y/N) ")
-                    if c.upper() == 'Y':
-                        item_to_db(playlist)
-                        input()
-                        break
-                    elif c.upper() == 'N':
-                        break
-                    else:
-                        print("invalid option...")
-            except:
-                print("An error occurred...")
-        elif x.upper() == "Q":
+                    track_name = input("What track would you like to search for?\n")
+                    track = get_track(track_name)
+                    os.system("cls")
+                    print(track.__repr__())
+                    v = verify_search()
+                    if v == "N":
+                        print("Sorry the info was not what you desired. Try adding more terms to narrow down the search!")
+                    print("Press enter to continue...")
+                    input()
+
+                case 'album':
+                    os.system("cls")
+                    album_name = input("What album would you like to search for?\n")
+                    album = get_album(album_name)
+                    os.system("cls")
+                    print(album.__repr__())
+                    v = verify_search()
+                    if v == "N":
+                        print("Sorry the info was not what you desired. Try adding more terms to narrow down the search!")
+                    print("Press enter to continue...")
+                    input()
+                case _:
+                    break       
+
+        elif type == 'q':
             break
         else:
-            print("Invalid input entered...")
+            print("Invalid input entered! Press enter to retry...")
             input()
-testrun()
+
+def verify_search():
+    while True:
+        x = input("Is this what you were looking for? (Y/N)\n").upper()
+        if x == "N" or x == "Y":
+            break
+        else:
+            print("Invalid option!")
+    return x
+
+def main():
+    return 0
+
+view_item()
