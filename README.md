@@ -28,3 +28,6 @@ Described in the planning were three major functions for this project:
 
 
 ## Issues
+
+- added view_item() function with no issues!
+- 
