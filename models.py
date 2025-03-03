@@ -47,7 +47,7 @@ class Artist(BaseModel):
             genres += f"{genre}, "
         genres = genres[:-2]
 
-        return f"{self.name}\n{followers}\n{genres}\n{self.popularity}"
+        return f"{self.name}\nFollowers: {followers}\nGenres: {genres}\nPopularity: {self.popularity}/100"
   
 class Track(BaseModel):
     id: str
