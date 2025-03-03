@@ -1,4 +1,5 @@
 import requests
+from dotenv import load_dotenv
 import os
 from models import Artist, Track, Album, Playlist, Base, DB_Track
 from pydantic import ValidationError
