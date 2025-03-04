@@ -122,7 +122,9 @@ def create_playlist(name):
     playlist = Playlist(name=name)
     return playlist
 
-def niche_calculator(item):
+def niche_calculator():
+    item = get_item()
+
     os.system("cls")
     if type(item) == Artist:
         print(item.__repr__())
@@ -140,12 +142,15 @@ def niche_calculator(item):
             print(f"super niche! you aren't a poser!")
     else:
         print("Can't judge the popularity of this item...")
+    
+    print("Press enter to continue...")
+    input()
 
-def _niche_calculator():
+def get_item():
     search_types = ['artist', 'track', 'album']
     while True:
         os.system("cls")
-        type = input("What would you like to calculate niche-ness for? (album, track, artist) (press 'q' to quit)\n").lower()
+        type = input("What item would you like to get? (album, track, artist) (press 'q' to quit)\n").lower()
         if type in search_types:
             break
         else:
@@ -155,23 +160,20 @@ def _niche_calculator():
         os.system("cls")
         artist_name = input("Enter the artist name:\n")
         artist = get_artist(artist_name)
-        niche_calculator(artist)
-        print("Press enter to continue...")
-        input()
+        return artist
+    
     elif type == 'track':
         os.system("cls")
         track_name = input("Enter the track name:\n")
         track = get_track(track_name)
-        niche_calculator(track)
-        print("Press enter to continue...")
-        input()
+        return track
+    
     elif type == 'album':
         os.system("cls")
         album_name = input("Enter the album name:\n")
         album = get_album(album_name)
-        niche_calculator(album)
-        print("Press enter to continue...")
-        input()
+        return album
+    
     else:
         os.system("cls")
         print("An error occurred! Press enter to continue...\n")
@@ -292,6 +294,8 @@ def view_item():
             print("Invalid input entered! Press enter to retry...")
             input()
 
+def view_itemm():
+    item = get_item()
 def verify_search():
     while True:
         x = input("Is this what you were looking for? (Y/N)\n").upper()
@@ -323,7 +327,7 @@ def menu():
 
         elif option == "2":
             os.system("cls")
-            _niche_calculator()
+            niche_calculator()
             
         elif option == "3":
             os.system("cls")
