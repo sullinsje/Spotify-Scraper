@@ -29,7 +29,9 @@ Described in the planning were three major functions for this project:
 
 ## Issues
 
+- The largest issue I faced was creating the classes from JSON I got from the API. Researching did not help me out, and I kept producing solutions that kept hitting the wall. I eventually realized from in class examples that class attributes are named exactly what the JSON fields are. I assume this is because of how Pydantic parses JSON to classes. After naming my attributes correctly, it worked flawlessly.
 - Added view_item() function with no issues!
 - Cleaned up niche_calculator() function: had issues regarding how I initially wrote the function and needed to change it to ask for the item to calculate niche-ness for
 - Added ability to clear the database. Not a common thing to do and was not discussed in class, so had to look up how to using SQLAlchemy.
-- No other major issues experienced. A lot of issues I ran into were simple programming errors; not a lot of issues that stumped me and required research.
+- I had issues with getting the program to run on machines after cloning the repo. This was due to the lack of an env file. The most simple solution was to add the env directly to github. But this is terrible security wise. I will remove this following grading and eventually figure out a solution. 
+- No other major issues experienced. A lot of issues I ran into were simple programming errors; not a lot of issues that stumped me and required research. Any other issues were mostly ran into regarding the database stuff. This was mostly experienced in Lab 2, so I did not have much trouble this time around.
