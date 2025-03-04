@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import os
 from models import Artist, Track, S_Track, Album, Playlist, Base, DB_Track
 from pydantic import ValidationError
-from sqlalchemy import create_engine, exists, select
+from sqlalchemy import create_engine, exists, select, delete
 from sqlalchemy.orm import sessionmaker
 
 #region: token stuff + database stuff
@@ -290,9 +290,27 @@ def read_all():
     result = session.execute(select(DB_Track))
     for value in result:
         print(value.__repr__())
+
+def _delete():
+    os.system("cls")
+    read_all()
+    track = input("\nWhat track would you like to delete? (Enter ID of song above!)\n")
+    nameExist = exists().where(DB_Track.ID == track)
+    nameExist = session.query(nameExist).scalar()
+    if track == "" or nameExist == False:
+        print("Track doesn't exist!")
+        input("Press enter to continue...")
+        return
     
-    print("Press enter to continue...")
-    input()
+    de = delete(DB_Track).where(DB_Track.ID == track)
+    try:
+        session.execute(de)
+        session.commit()
+        print("Track successfully deleted!")
+        input("Press enter to continue...")
+    except Exception:
+        print("An error occurred. Press enter to continue...")
+        input()
 
 def display_menu():
     print("========== Main Menu ==========")
@@ -326,7 +344,6 @@ def menu():
             print("Playlist successfully created! Press enter to continue...")
             input()
             
-            
         elif option == "4":
             os.system("cls")
             for i in range(0, len(cache)):
@@ -347,6 +364,8 @@ def menu():
         elif option == "6":
             os.system("cls")
             read_all()
+            print("Press enter to continue...")
+            input()
         
         elif option == "7":
             os.system("cls")
