@@ -60,13 +60,13 @@ class Track(BaseModel):
         artists = ""
         for artist in self.artists:
             artists += artist.__repr__()
-        return f"{self.name} - {artists} (from: {self.album.__repr__()})"
+        return f"{self.name} - {artists} (Track {self.track_number} from the album: {self.album.__repr__()}) \npopularity: {self.popularity}/100"
 
 class Tracks(BaseModel):
     items: list[S_Track]
 
     def __repr__(self):
-        output = "Tracklist: \n"
+        output = "Track list: \n"
         for track in self.items:
             output += track.__repr__() + "\n"
         return output
@@ -85,7 +85,7 @@ class Album(BaseModel):
         artists = ""
         for artist in self.artists:
             artists += artist.__repr__()
-        return f"{self.type}\n{self.total_tracks}\n{self.name}\n{self.release_date}\n{artists}\n{self.tracks.__repr__()}"
+        return f"{self.name}\n{artists}\nReleased: {self.release_date}\nPopularity: {self.popularity}/100\n{self.tracks.__repr__()}"
 
 class Playlist:
     def __init__(self, name):

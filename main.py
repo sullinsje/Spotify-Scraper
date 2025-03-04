@@ -123,20 +123,59 @@ def create_playlist(name):
     return playlist
 
 def niche_calculator(item):
+    os.system("cls")
     if type(item) == Artist:
+        print(item.__repr__())
         popularity = item.popularity
         if popularity > 50:
-            return ("not very niche...")
+            print(f"not very niche...")
         else:
-            return ("you must frequent rym...")
+            print(f"super niche! you aren't a poser!")
     elif type(item) == Track or type(item) == Album:
+        print(item.__repr__())
         popularity = item.popularity
         if popularity > 30:
-            return ("not very niche...")
+            print(f"not very niche...")
         else:
-            return ("you must frequent rym...")
+            print(f"super niche! you aren't a poser!")
     else:
-        return "Can't judge the popularity of this item..."
+        print("Can't judge the popularity of this item...")
+
+def _niche_calculator():
+    search_types = ['artist', 'track', 'album']
+    while True:
+        os.system("cls")
+        type = input("What would you like to calculate niche-ness for? (album, track, artist) (press 'q' to quit)\n").lower()
+        if type in search_types:
+            break
+        else:
+            input("Invalid type! Press enter to retry...\n")
+    
+    if type == 'artist':
+        os.system("cls")
+        artist_name = input("Enter the artist name:\n")
+        artist = get_artist(artist_name)
+        niche_calculator(artist)
+        print("Press enter to continue...")
+        input()
+    elif type == 'track':
+        os.system("cls")
+        track_name = input("Enter the track name:\n")
+        track = get_track(track_name)
+        niche_calculator(track)
+        print("Press enter to continue...")
+        input()
+    elif type == 'album':
+        os.system("cls")
+        album_name = input("Enter the album name:\n")
+        album = get_album(album_name)
+        niche_calculator(album)
+        print("Press enter to continue...")
+        input()
+    else:
+        os.system("cls")
+        print("An error occurred! Press enter to continue...\n")
+        input()
 
 def item_to_db(item):
     if type(item) == Track:
@@ -262,7 +301,52 @@ def verify_search():
             print("Invalid option!")
     return x
 
-def main():
-    return 0
+def display_menu():
+    print("========== Main Menu ==========")
+    print("1. View an Item")
+    print("2. Niche Calculator")
+    print("3. Create a Playlist")
+    print("4. Post to database")
+    print("5. Delete from database")
+    print("6. Exit")
+    print("===============================")
 
-view_item()
+def menu():
+    while True:
+        os.system("cls")
+        display_menu()
+        option = input("Choose a menu option (1, 2, 3, 4, 5, 6): ")
+
+        if option == "1":
+            os.system("cls")
+            view_item()
+
+        elif option == "2":
+            os.system("cls")
+            _niche_calculator()
+            
+        elif option == "3":
+            os.system("cls")
+            read_all()
+            
+            
+        elif option == "4":
+            os.system("cls")
+            _update()
+
+        elif option == "5":
+            os.system("cls")
+            _delete()
+            
+        elif option == "6":
+            os.system("cls")
+            print("Goodbye!")
+            break
+        
+        else:
+            os.system("cls")
+            print("Invalid input entered.")
+            input("Press enter to continue...")
+
+
+menu()
