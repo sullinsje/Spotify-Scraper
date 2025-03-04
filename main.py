@@ -244,58 +244,18 @@ def item_to_db(item):
         print("Cannot add this item...")
 
 def view_item():
-    search_types = ['artist', 'track', 'album']
     while True:
+        item = get_item()
         os.system("cls")
-        type = input("What would you like to search for? (album, track, artist) (press 'q' to quit)\n").lower()
-        if type in search_types:
-            match type:
-                case 'artist':
-                    os.system("cls")
-                    artist_name = input("What artist would you like to search for?\n")
-                    artist = get_artist(artist_name)
-                    os.system("cls")
-                    print(artist.__repr__())
-                    v = verify_search()
-                    if v == "N":
-                        print("Sorry the info was not what you desired. Try adding more terms to narrow down the search!")
-                    print("Press enter to continue...")
-                    input()
-                
-                case 'track':
-                    os.system("cls")
-                    track_name = input("What track would you like to search for?\n")
-                    track = get_track(track_name)
-                    os.system("cls")
-                    print(track.__repr__())
-                    v = verify_search()
-                    if v == "N":
-                        print("Sorry the info was not what you desired. Try adding more terms to narrow down the search!")
-                    print("Press enter to continue...")
-                    input()
-
-                case 'album':
-                    os.system("cls")
-                    album_name = input("What album would you like to search for?\n")
-                    album = get_album(album_name)
-                    os.system("cls")
-                    print(album.__repr__())
-                    v = verify_search()
-                    if v == "N":
-                        print("Sorry the info was not what you desired. Try adding more terms to narrow down the search!")
-                    print("Press enter to continue...")
-                    input()
-                case _:
-                    break       
-
-        elif type == 'q':
+        print(item.__repr__())
+        v = verify_search()
+        if v == "N":
+            print("Sorry the info was not what you desired. Try adding more terms to narrow down the search!")
+        
+        x = input("Press enter to continue or 'Q' to quit...").upper()
+        if x == 'Q':
             break
-        else:
-            print("Invalid input entered! Press enter to retry...")
-            input()
-
-def view_itemm():
-    item = get_item()
+    
 def verify_search():
     while True:
         x = input("Is this what you were looking for? (Y/N)\n").upper()
