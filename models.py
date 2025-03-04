@@ -102,7 +102,7 @@ class Playlist:
             print("Cannot add this item!")
     
     def __repr__(self):
-        output = f"{self.name}:\n"
+        output = f"=====Playlist: {self.name}=====\n"
         for track in self.playlist:
             artists = ""
             for artist in track.artists:
