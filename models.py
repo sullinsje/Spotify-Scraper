@@ -92,14 +92,22 @@ class Playlist:
         self.name = name
         self.playlist = []
 
-    def Add(self, track):
-        if type(track) == Track:
-            self.playlist.append(track)
+    def Add(self, item):
+        if type(item) == Track:
+            self.playlist.append(item)
+        elif type(item) == Album:
+            for track in item.tracks.items:
+                self.playlist.append(track)
+        else:
+            print("Cannot add this item!")
     
     def __repr__(self):
         output = f"{self.name}:\n"
         for track in self.playlist:
-            output += track.__repr__() + '\n'
+            artists = ""
+            for artist in track.artists:
+                artists += artist.__repr__()
+            output += f"{track.name} - {artists}\n"
         return output
     
 class DB_Track(Base):

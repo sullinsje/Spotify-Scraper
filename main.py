@@ -1,7 +1,7 @@
 import requests
 from dotenv import load_dotenv
 import os
-from models import Artist, Track, Album, Playlist, Base, DB_Track
+from models import Artist, Track, S_Track, Album, Playlist, Base, DB_Track
 from pydantic import ValidationError
 from sqlalchemy import create_engine, exists
 from sqlalchemy.orm import sessionmaker
@@ -118,8 +118,23 @@ def search(term, type):
 
 #endregion
 
-def create_playlist(name):
+def create_playlist():
+    os.system("cls")
+    name = input("What would you like to name this playlist?\n")
     playlist = Playlist(name=name)
+    while True:
+        os.system("cls")
+        x = input("Would you like to add anything to it? (Y/N)\n").upper()
+        if x == 'N':
+            break
+        elif x == 'Y':
+            item = get_item()
+            playlist.Add(item)
+            again = input("Press enter to continue or 'Q' to quit...").upper()
+            if again == 'Q':
+                break
+        else:
+            print("Invalid choice! Press enter to continue...")
     return playlist
 
 def niche_calculator():
@@ -230,9 +245,14 @@ def item_to_db(item):
                 for a in track.artists:
                     artists += f"{a.__repr__()}, "
                 artists = artists[:-2]
-                t = DB_Track(ID=track.id, Name=track.name, 
-                            Artists=artists, Track_Number=track.track_number,
-                            Album=track.album.name)
+                if type(track) == Track:
+                    t = DB_Track(ID=track.id, Name=track.name, 
+                                Artists=artists, Track_Number=track.track_number,
+                                Album=track.album.name)
+                elif type(track) == S_Track:
+                    t = DB_Track(ID=track.id, Name=track.name, 
+                                Artists=artists, Track_Number=track.track_number,
+                                Album=None)
                 try:
                     session.add(t) 
                     session.commit()
@@ -291,7 +311,8 @@ def menu():
             
         elif option == "3":
             os.system("cls")
-            read_all()
+            p = create_playlist()
+            input()
             
             
         elif option == "4":
