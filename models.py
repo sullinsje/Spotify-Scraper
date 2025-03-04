@@ -119,3 +119,6 @@ class DB_Track(Base):
     Track_Number = Column(Integer)
     Album = Column(String)
     Popularity = Column(String)
+
+    def __repr__(self):
+        return (f"{'ID: ' + self.ID:<25}\t{'Name: ' + self.Name:<25}\t{'Artist: ' + self.Artists:<25}\tTrack Number: {self.Track_Number}\t'Album: {self.Album}\tPopularity: {self.Popularity}")

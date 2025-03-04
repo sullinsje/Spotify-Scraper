@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import os
 from models import Artist, Track, S_Track, Album, Playlist, Base, DB_Track
 from pydantic import ValidationError
-from sqlalchemy import create_engine, exists
+from sqlalchemy import create_engine, exists, select
 from sqlalchemy.orm import sessionmaker
 
 #region: token stuff + database stuff
@@ -285,21 +285,31 @@ def verify_search():
             print("Invalid option!")
     return x
 
+def read_all():
+    os.system("cls")
+    result = session.execute(select(DB_Track))
+    for value in result:
+        print(value.__repr__())
+    
+    print("Press enter to continue...")
+    input()
+
 def display_menu():
     print("========== Main Menu ==========")
-    print("1. View an Item")
+    print("1. Create an Item")
     print("2. Niche Calculator")
     print("3. Create a Playlist")
     print("4. Post to database")
     print("5. Delete from database")
-    print("6. Exit")
+    print("6. View database")
+    print("7. Exit")
     print("===============================")
 
 def menu():
     while True:
         os.system("cls")
         display_menu()
-        option = input("Choose a menu option (1, 2, 3, 4, 5, 6): ")
+        option = input("Choose a menu option (1, 2, 3, 4, 5, 6, 7): ")
 
         if option == "1":
             os.system("cls")
@@ -333,8 +343,12 @@ def menu():
         elif option == "5":
             os.system("cls")
             _delete()
-            
+        
         elif option == "6":
+            os.system("cls")
+            read_all()
+        
+        elif option == "7":
             os.system("cls")
             print("Goodbye!")
             break
