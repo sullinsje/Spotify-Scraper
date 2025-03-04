@@ -29,6 +29,7 @@ Described in the planning were three major functions for this project:
 
 ## Issues
 
-- added view_item() function with no issues!
-- cleaned up niche_calculator() function: had issues regarding how I initially wrote the function and needed to change it to ask for the item to calculate niche-ness for
-- 
+- Added view_item() function with no issues!
+- Cleaned up niche_calculator() function: had issues regarding how I initially wrote the function and needed to change it to ask for the item to calculate niche-ness for
+- Added ability to clear the database. Not a common thing to do and was not discussed in class, so had to look up how to using SQLAlchemy.
+- No other major issues experienced. A lot of issues I ran into were simple programming errors; not a lot of issues that stumped me and required research.
