@@ -30,4 +30,5 @@ Described in the planning were three major functions for this project:
 ## Issues
 
 - added view_item() function with no issues!
+- cleaned up niche_calculator() function: had issues regarding how I initially wrote the function and needed to change it to ask for the item to calculate niche-ness for
 - 
