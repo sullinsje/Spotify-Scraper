@@ -34,6 +34,7 @@ Base.metadata.create_all(bind=engine)
 Session = sessionmaker(bind=engine)
 session = Session()
 
+cache = []
 #endregion
 
 #region: gets & search
@@ -162,31 +163,27 @@ def niche_calculator():
     input()
 
 def get_item():
-    search_types = ['artist', 'track', 'album']
-    while True:
-        os.system("cls")
-        type = input("What item would you like to get? (album, track, artist) (press 'q' to quit)\n").lower()
-        if type in search_types:
-            break
-        else:
-            input("Invalid type! Press enter to retry...\n")
+    type = input("What item would you like to get?\n1. artist\n2. track\n3. album\n")
     
-    if type == 'artist':
+    if type == '1':
         os.system("cls")
         artist_name = input("Enter the artist name:\n")
         artist = get_artist(artist_name)
+        cache.append(artist)
         return artist
     
-    elif type == 'track':
+    elif type == '2':
         os.system("cls")
         track_name = input("Enter the track name:\n")
         track = get_track(track_name)
+        cache.append(track)
         return track
     
-    elif type == 'album':
+    elif type == '3':
         os.system("cls")
         album_name = input("Enter the album name:\n")
         album = get_album(album_name)
+        cache.append(album)
         return album
     
     else:
@@ -209,7 +206,7 @@ def item_to_db(item):
             try:
                 session.add(t) 
                 session.commit()
-                input("Item added successfully!")
+                print("Item added successfully!")
             except:
                 print("An error occurred...")
         else:
@@ -256,12 +253,15 @@ def item_to_db(item):
                 try:
                     session.add(t) 
                     session.commit()
+                    print("Item added successfully!")
                 except:
                     print("An error occurred...")
             else:
                 print(f"{track.name} already exists!")
     else:
         print("Cannot add this item...")
+    print("Press enter to continue...")
+    input()
 
 def view_item():
     while True:
@@ -312,12 +312,23 @@ def menu():
         elif option == "3":
             os.system("cls")
             p = create_playlist()
+            cache.append(p)
+            print("Playlist successfully created! Press enter to continue...")
             input()
             
             
         elif option == "4":
             os.system("cls")
-            _update()
+            for i in range(0, len(cache)):
+                print(f"{i}. {cache[i].name} ({type(cache[i])})")
+            while True:
+                try:
+                    x = (int(input("Which previously viewed item would you like to add to database?\n")))
+                    break
+                except:
+                    print("Value was not an integer!")
+            item = cache[x]
+            item_to_db(item)
 
         elif option == "5":
             os.system("cls")
