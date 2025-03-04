@@ -168,21 +168,37 @@ def get_item():
         
         if type == '1':
             os.system("cls")
-            artist_name = input("Enter the artist name:\n")
+            while True:
+                artist_name = input("Enter the artist name:\n")
+                if artist_name != "":
+                    break
+                else:
+                    print("invalid name!")
             artist = get_artist(artist_name)
             cache.append(artist)
             return artist
         
         elif type == '2':
             os.system("cls")
-            track_name = input("Enter the track name:\n")
+            while True:
+                track_name = input("Enter the track name:\n")
+                if track_name != "":
+                    break
+                else:
+                    print("invalid name!")
+                    
             track = get_track(track_name)
             cache.append(track)
             return track
         
         elif type == '3':
             os.system("cls")
-            album_name = input("Enter the album name:\n")
+            while True:
+                album_name = input("Enter the album name:\n")
+                if album_name != "":
+                    break
+                else:
+                    print("invalid name!")
             album = get_album(album_name)
             cache.append(album)
             return album
